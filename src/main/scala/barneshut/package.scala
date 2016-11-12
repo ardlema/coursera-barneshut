@@ -56,14 +56,24 @@ package object barneshut {
   ) extends Quad {
     val centerX: Float = nw.centerX + (nw.size / 2)
     val centerY: Float = nw.centerY + (nw.size / 2)
-    val size: Float = ???
-    val mass: Float = ???
-    val massX: Float = ???
-    val massY: Float = ???
-    val total: Int = ???
+    val size: Float = 0
+    val mass: Float = nw.mass + ne.mass + sw.mass + se.mass
+    val massX: Float = getMassX(nw) + getMassX(ne) + getMassX(sw) + getMassX(se)
+    val massY: Float = getMassY(nw) + getMassY(ne) + getMassY(sw) + getMassY(se)
+    val total: Int = nw.total + ne.total + sw.total + se.total
 
     def insert(b: Body): Fork = {
       ???
+    }
+
+    def getMassX(e: Quad): Float = e match {
+      case Empty(_,_,_) => 0
+      case Leaf(_, _, _, bodies) => bodies.foldLeft(0F)((b1, b2) => b2.x + b1)
+    }
+
+    def getMassY(e: Quad): Float = e match {
+      case Empty(_,_,_) => 0
+      case Leaf(_, _, _, bodies) => bodies.foldLeft(0F)((b1, b2) => b2.y + b1)
     }
   }
 

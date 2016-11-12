@@ -48,7 +48,7 @@ package object barneshut {
     def massY: Float = centerY
     def mass: Float = 0
     def total: Int = 0
-    def insert(b: Body): Quad = ???
+    def insert(b: Body): Quad = Leaf(massX, massY, size, Seq(b))
   }
 
   case class Fork(

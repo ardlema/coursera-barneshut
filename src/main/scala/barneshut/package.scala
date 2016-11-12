@@ -54,8 +54,8 @@ package object barneshut {
   case class Fork(
     nw: Quad, ne: Quad, sw: Quad, se: Quad
   ) extends Quad {
-    val centerX: Float = ???
-    val centerY: Float = ???
+    val centerX: Float = nw.centerX + (nw.size / 2)
+    val centerY: Float = nw.centerY + (nw.size / 2)
     val size: Float = ???
     val mass: Float = ???
     val massX: Float = ???
@@ -69,8 +69,9 @@ package object barneshut {
 
   case class Leaf(centerX: Float, centerY: Float, size: Float, bodies: Seq[Body])
   extends Quad {
-    val (mass, massX, massY) = (??? : Float, ??? : Float, ??? : Float)
-    val total: Int = ???
+    val totalMass = bodies.foldLeft(0F)((b1, b2) => b2.mass + b1)
+    val (mass, massX, massY) = (totalMass: Float, bodies(0).x : Float, bodies(0).y : Float)
+    val total: Int = bodies.size
     def insert(b: Body): Quad = ???
   }
 

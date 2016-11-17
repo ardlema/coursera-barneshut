@@ -169,8 +169,14 @@ package object barneshut {
     val matrix = new Array[ConcBuffer[Body]](sectorPrecision * sectorPrecision)
     for (i <- 0 until matrix.length) matrix(i) = new ConcBuffer
 
+    def coordinate(point: Float, boundary: Float) : Int = {
+      ((point - boundary) / sectorSize).toInt max 0 min sectorPrecision - 1
+    }
+
     def +=(b: Body): SectorMatrix = {
-      ???
+      val x = coordinate(b.x, boundaries.minX)
+      val y = coordinate(b.y, boundaries.minY)
+      this(x, y) += b
       this
     }
 
